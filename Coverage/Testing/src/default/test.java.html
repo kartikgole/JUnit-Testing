@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>test.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">(default package) (14 Nov, 2017 11:41:58 PM)</a> &gt; <a href="../../index.html" class="el_group">Testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">test.java</span></div><h1>test.java</h1><pre class="source lang-java linenums">import static org.junit.Assert.*;
+
+import org.junit.Test;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runners.Parameterized.Parameters;
+
+<span class="fc" id="L9">public class test {</span>
+
+<span class="fc" id="L11">	SportsEventManager manager = new SportsEventManager(); </span>
+<span class="fc" id="L12">	public int maxGames=manager.MAX_GAMES;</span>
+<span class="fc" id="L13">	public int MAX_DAYS=manager.MAX_DAYS;</span>
+<span class="fc" id="L14">	public int MAX_PLAYERS=manager.MAX_PLAYERS;</span>
+<span class="fc" id="L15">	Game[] gamelist= manager.gameList;</span>
+<span class="fc" id="L16">	Player[] playerlist = manager.playerList;</span>
+<span class="fc" id="L17">	DaySchedule[] scheduleList = manager.scheduleList;</span>
+<span class="fc" id="L18">	int gameCounter=manager.gameCounter;</span>
+<span class="fc" id="L19">	int playerCounter=manager.playerCounter;</span>
+<span class="fc" id="L20">	int scheduleCounter=manager.scheduleCounter;</span>
+
+	@Test 
+	public void addGameCheckMaxPlayers() throws Exception 
+	{
+<span class="fc" id="L25">		Game game=new Game(&quot;Cricket&quot;,0);</span>
+<span class="fc" id="L26">		game.setName(game.name);</span>
+<span class="fc" id="L27">		game.setMaxPlayers(game.maxPlayers);</span>
+<span class="fc" id="L28">		String name = game.getName();</span>
+<span class="fc" id="L29">		int maxPlayers = game.getMaxPlayers();</span>
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">		assertTrue(&quot;100&quot;,maxPlayers&lt;=0);</span>
+<span class="fc" id="L31">	}</span>
+	
+	@Test
+	public void AddGameTest1()
+	{
+<span class="fc" id="L36">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L37">		int re = sem.addGame(&quot;Rugby&quot;, 0);</span>
+<span class="fc" id="L38">		assertEquals(100,re);</span>
+<span class="fc" id="L39">	}</span>
+	
+	
+	
+	@Test
+	public void AddGameTest2()
+	{
+<span class="fc" id="L46">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L47">		int re = sem.addGame(null, 50);</span>
+<span class="fc" id="L48">		assertEquals(99,re);</span>
+<span class="fc" id="L49">	}</span>
+	
+	@Test
+	public void AddGameTest3()
+	{
+<span class="fc" id="L54">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L55">		int re = sem.addGame(&quot;Rugby&quot;, 11);</span>
+<span class="fc" id="L56">		int re1 = sem.addGame(&quot;Rugby&quot;, 11);</span>
+<span class="fc" id="L57">		assertEquals(101,re1);</span>
+<span class="fc" id="L58">	}</span>
+	
+	@Test
+	public void AddGameTest4()
+	{
+		
+<span class="fc" id="L64">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L65">		sem.gameCounter = 25;</span>
+<span class="fc" id="L66">		int re = sem.addGame(&quot;Rugby&quot;, 11);</span>
+		
+<span class="fc" id="L68">		assertEquals(98,re);</span>
+<span class="fc" id="L69">	}</span>
+	
+	@Test
+	public void checkaddtogamelist()
+	{		
+<span class="fc" id="L74">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L75">		int re = sem.addGame(&quot;Rugby&quot;, 70);</span>
+<span class="fc" id="L76">		assertEquals(0,re);</span>
+<span class="fc" id="L77">	}</span>
+	
+	@Test
+	public void searchGameTest()
+	{
+		//System.out.println(&quot;Check1&quot;);
+<span class="fc" id="L83">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L84">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L85">		sem.addGame(&quot;Football&quot;, 44);</span>
+<span class="fc" id="L86">		Game storedGame = sem.searchGame(&quot;Soccer&quot;);</span>
+<span class="fc" id="L87">		Game storedGame1 = sem.searchGame(&quot;Football&quot;);</span>
+		
+
+<span class="fc" id="L90">		assertEquals(&quot;Soccer&quot;,storedGame.name);</span>
+<span class="fc" id="L91">		assertEquals(&quot;Football&quot;,storedGame1.name);</span>
+		
+		
+<span class="fc" id="L94">	}</span>
+	
+	@Test
+	public void searchGameFails()
+	{
+<span class="fc" id="L99">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L100">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L101">		Game storedGame1 = sem.searchGame(&quot;Football&quot;);</span>
+<span class="fc" id="L102">		System.out.println(storedGame1);</span>
+<span class="fc" id="L103">		assertEquals(null,storedGame1);</span>
+		
+<span class="fc" id="L105">	}</span>
+	
+	
+	
+	
+	
+	@Test
+	public void testaddPlayer()
+	{
+<span class="fc" id="L114">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L115">		String[] gamenames = {&quot;Soccer&quot;, &quot;Football&quot;};</span>
+<span class="fc" id="L116">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L117">		sem.addGame(&quot;Football&quot;, 44);</span>
+<span class="fc" id="L118">		String nam1 = sem.addPlayer(&quot;Prakash&quot;, gamenames);</span>
+	
+
+<span class="fc" id="L121">		System.out.println(nam1);</span>
+	
+<span class="fc" id="L123">		assertEquals(&quot;Prakash added successfully&quot;,nam1);</span>
+	
+<span class="fc" id="L125">	}</span>
+	
+	@Test
+	public void checkPlayerAlreadyExists()
+	{
+		
+<span class="fc" id="L131">		SportsEventManager sem = new SportsEventManager();</span>
+
+<span class="fc" id="L133">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L134">		sem.addGame(&quot;Football&quot;, 44);</span>
+<span class="fc" id="L135">		String[] gamenames = {&quot;Soccer&quot;, &quot;Football&quot;};</span>
+<span class="fc" id="L136">		String nam1 = sem.addPlayer(&quot;Prakash&quot;, gamenames);</span>
+	
+<span class="fc" id="L138">		String nam2 = sem.addPlayer(&quot;Prakash&quot;, gamenames);</span>
+		
+<span class="fc" id="L140">		System.out.println(nam2);</span>
+<span class="fc" id="L141">		assertEquals(&quot;Prakash already exists&quot;,nam2);</span>
+		
+<span class="fc" id="L143">	}</span>
+	
+	@Test
+	public void RegistrationFailureforNonExistentGame()
+	{
+<span class="fc" id="L148">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L149">		String[] gamenames = {&quot;Football&quot;};</span>
+<span class="fc" id="L150">		String nam1 = sem.addPlayer(&quot;Prakash&quot;, gamenames);</span>
+	
+<span class="fc" id="L152">		System.out.println(nam1);</span>
+<span class="fc" id="L153">		assertEquals(&quot;Error you cannot be registered for Football&quot;,nam1);</span>
+
+
+<span class="fc" id="L156">	}</span>
+	
+	@Test
+	public void TestAddSchedule()
+	{
+<span class="fc" id="L161">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L162">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L163">		sem.addGame(&quot;Football&quot;, 44);</span>
+		
+<span class="fc" id="L165">		String[] gamenames = {&quot;Football&quot;, &quot;Soccer&quot;};</span>
+		
+<span class="fc" id="L167">		String msg = sem.addSchedule(&quot;Monday&quot;, gamenames);</span>
+<span class="fc" id="L168">		assertEquals(&quot;Monday added successfully&quot;,msg);</span>
+
+<span class="fc" id="L170">	}</span>
+	
+	@Test
+	public void TestDayScheduleAlreadyExists()
+	{
+		
+<span class="fc" id="L176">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L177">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L178">		sem.addGame(&quot;Football&quot;, 44);</span>
+<span class="fc" id="L179">		String[] gamenames = {&quot;Soccer&quot;, &quot;Football&quot;};</span>
+		
+<span class="fc" id="L181">		String msg = sem.addSchedule(&quot;Monday&quot;, gamenames);</span>
+		
+		
+<span class="fc" id="L184">		String msg1 = sem.addSchedule(&quot;Monday&quot;,gamenames);</span>
+		
+<span class="fc" id="L186">		System.out.println(msg1);</span>
+<span class="fc" id="L187">		assertEquals(&quot;Monday already scheduled&quot;,msg1);</span>
+
+<span class="fc" id="L189">	}</span>
+	
+	@Test
+	public void TestScheduleforNonexistentGame()
+	{
+<span class="fc" id="L194">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L195">		String[] gamenames = {&quot;Football&quot;};</span>
+<span class="fc" id="L196">		String nam1 = sem.addSchedule(&quot;Monday&quot;, gamenames);</span>
+<span class="fc" id="L197">		System.out.println(nam1);</span>
+<span class="fc" id="L198">		assertEquals(&quot;Error you cannot be registered for Football&quot;,nam1);	</span>
+<span class="fc" id="L199">	}</span>
+	
+	@Test
+	public void SearchPlayerTest()
+	{
+<span class="fc" id="L204">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L205">		sem.addGame(&quot;Football&quot;, 22);</span>
+<span class="fc" id="L206">		sem.addGame(&quot;Soccer&quot;, 44);</span>
+<span class="fc" id="L207">		String[] gamenames = {&quot;Football&quot;,&quot;Soccer&quot;};</span>
+<span class="fc" id="L208">		sem.addPlayer(&quot;Prakash&quot;,gamenames);</span>
+<span class="fc" id="L209">		String playername = &quot;Prakash&quot;;</span>
+<span class="fc" id="L210">		Player storedPlayer = sem.searchPlayer(playername);</span>
+<span class="fc" id="L211">		System.out.println(storedPlayer.name);</span>
+<span class="fc" id="L212">		assertEquals(&quot;Prakash&quot;,storedPlayer.name);</span>
+<span class="fc" id="L213">	}</span>
+	
+	@Test
+	public void searchPlayerFails()
+	{
+<span class="fc" id="L218">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L219">		sem.addGame(&quot;Football&quot;, 22);</span>
+<span class="fc" id="L220">		sem.addGame(&quot;Soccer&quot;, 44);</span>
+<span class="fc" id="L221">		String[] gamenames = {&quot;Football&quot;,&quot;Soccer&quot;};</span>
+<span class="fc" id="L222">		sem.addPlayer(&quot;Prakash&quot;,gamenames);</span>
+<span class="fc" id="L223">		String playername = &quot;Rohit&quot;;</span>
+<span class="fc" id="L224">		Player storedPlayer = sem.searchPlayer(playername);</span>
+<span class="fc" id="L225">		System.out.println(storedPlayer);</span>
+<span class="fc" id="L226">		assertEquals(null,storedPlayer);</span>
+<span class="fc" id="L227">	}</span>
+	
+	
+	
+	@Test
+	public void searchDayTest()
+	{
+<span class="fc" id="L234">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L235">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L236">		sem.addGame(&quot;Football&quot;, 44);</span>
+<span class="fc" id="L237">		String[] gamenames = {&quot;Soccer&quot;, &quot;Football&quot;};</span>
+		
+<span class="fc" id="L239">		String msg = sem.addSchedule(&quot;Monday&quot;, gamenames);</span>
+		
+<span class="fc" id="L241">		DaySchedule ds = sem.searchDay(&quot;Monday&quot;);</span>
+<span class="fc" id="L242">		System.out.println(ds.dayName);</span>
+<span class="fc" id="L243">		assertEquals(&quot;Monday&quot;,ds.dayName);</span>
+<span class="fc" id="L244">	}</span>
+	
+	@Test
+	public void searchDayFails()
+	{
+<span class="fc" id="L249">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L250">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L251">		sem.addGame(&quot;Football&quot;, 44);</span>
+<span class="fc" id="L252">		String[] gamenames = {&quot;Soccer&quot;, &quot;Football&quot;};</span>
+		
+<span class="fc" id="L254">		String msg = sem.addSchedule(&quot;Monday&quot;, gamenames);</span>
+		
+<span class="fc" id="L256">		DaySchedule ds = sem.searchDay(&quot;Tuesday&quot;);</span>
+<span class="fc" id="L257">		System.out.println(ds);</span>
+<span class="fc" id="L258">		assertEquals(null,ds);</span>
+<span class="fc" id="L259">	}</span>
+	
+	@Test
+	public void DayWiseScheduleTest()
+	{
+<span class="fc" id="L264">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L265">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L266">		sem.addGame(&quot;Football&quot;, 44);</span>
+
+<span class="fc" id="L268">		String[] gamenames = {&quot;Soccer&quot;,&quot;Football&quot;};</span>
+<span class="fc" id="L269">		sem.addSchedule(&quot;Monday&quot;, gamenames);</span>
+<span class="fc" id="L270">		sem.addPlayer(&quot;Prakash&quot;, gamenames);</span>
+		
+<span class="fc" id="L272">		String dws = sem.displayDayWiseSchedule(&quot;Monday&quot;);</span>
+<span class="fc" id="L273">		System.out.println(dws);</span>
+<span class="fc" id="L274">		assertEquals(&quot;Game = Soccer Prakash\nGame = Football Prakash\n&quot;,dws);</span>
+<span class="fc" id="L275">	}</span>
+	
+	@Test
+	public void DayWiseScheduleDoesntExist()
+	{
+<span class="fc" id="L280">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L281">		String dws = sem.displayDayWiseSchedule(&quot;Monday&quot;);</span>
+<span class="fc" id="L282">		System.out.println(dws);</span>
+<span class="fc" id="L283">		assertEquals(&quot;Error : This day is not valid&quot;,dws);</span>
+		
+<span class="fc" id="L285">	}</span>
+	
+	@Test
+	public void GameWiseScheduleTest()
+	{
+<span class="fc" id="L290">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L291">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L292">		sem.addGame(&quot;Football&quot;, 44);</span>
+
+<span class="fc" id="L294">		String[] gamenames = {&quot;Soccer&quot;,&quot;Football&quot;};</span>
+<span class="fc" id="L295">		sem.addSchedule(&quot;Monday&quot;, gamenames);</span>
+<span class="fc" id="L296">		sem.addPlayer(&quot;Prakash&quot;, gamenames);</span>
+		
+<span class="fc" id="L298">		String gws = sem.displayGameWiseSchedule(&quot;Soccer&quot;);</span>
+<span class="fc" id="L299">		System.out.println(gws);</span>
+<span class="fc" id="L300">		assertEquals(&quot;Players Names: Prakash\nDay Names: Monday&quot;,gws);</span>
+<span class="fc" id="L301">	}</span>
+	
+	@Test
+	public void GameWiseScheduleDoesntExist()
+	{
+<span class="fc" id="L306">		SportsEventManager sem = new SportsEventManager();</span>
+		//DaySchedule res = sem.searchDay(&quot;Monday&quot;);
+<span class="fc" id="L308">		String gws = sem.displayGameWiseSchedule(&quot;Soccer&quot;);</span>
+<span class="fc" id="L309">		System.out.println(gws);</span>
+<span class="fc" id="L310">		assertEquals(&quot;Error : This game is not valid&quot;,gws);</span>
+<span class="fc" id="L311">	}</span>
+	
+	@Test
+	public void PlayerWiseScheduleTest()
+	{
+<span class="fc" id="L316">		SportsEventManager sem = new SportsEventManager();</span>
+<span class="fc" id="L317">		sem.addGame(&quot;Soccer&quot;, 22);</span>
+<span class="fc" id="L318">		sem.addGame(&quot;Football&quot;, 44);</span>
+
+<span class="fc" id="L320">		String[] gamenames = {&quot;Soccer&quot;,&quot;Football&quot;};</span>
+<span class="fc" id="L321">		sem.addSchedule(&quot;Monday&quot;, gamenames);</span>
+<span class="fc" id="L322">		sem.addPlayer(&quot;Prakash&quot;, gamenames);</span>
+		
+<span class="fc" id="L324">		String pws = sem.displayPlayerWiseSchedule(&quot;Prakash&quot;);</span>
+<span class="fc" id="L325">		System.out.println(pws);</span>
+<span class="fc" id="L326">		assertEquals(&quot;Game : Soccer Monday\nGame : Football Monday\n&quot;,pws);</span>
+<span class="fc" id="L327">	}</span>
+	
+	@Test
+	public void PlayerWiseScheduleDoesntExist()
+	{
+<span class="fc" id="L332">		SportsEventManager sem = new SportsEventManager();</span>
+
+<span class="fc" id="L334">		String pws = sem.displayPlayerWiseSchedule(&quot;Prakash&quot;);</span>
+<span class="fc" id="L335">		System.out.println(pws);</span>
+<span class="fc" id="L336">		assertEquals(&quot;Error : This player is not valid&quot;,pws);</span>
+<span class="fc" id="L337">	}</span>
+	
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>(default package) (14 Nov, 2017 11:41:58 PM)</div></body></html>

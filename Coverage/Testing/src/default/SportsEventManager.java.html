@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SportsEventManager.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">(default package) (14 Nov, 2017 11:41:58 PM)</a> &gt; <a href="../../index.html" class="el_group">Testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">SportsEventManager.java</span></div><h1>SportsEventManager.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">public class SportsEventManager {</span>
+	public static final int MAX_GAMES=20;
+	public static final int MAX_PLAYERS=100;
+	public static final int MAX_DAYS=7;
+<span class="fc" id="L5">	Game[] gameList = new Game[MAX_GAMES];</span>
+<span class="fc" id="L6">	Player[] playerList = new Player[MAX_PLAYERS];</span>
+<span class="fc" id="L7">	DaySchedule[] scheduleList = new DaySchedule[MAX_DAYS];</span>
+<span class="fc" id="L8">	int gameCounter=0;</span>
+<span class="fc" id="L9">	int playerCounter=0;</span>
+<span class="fc" id="L10">	int scheduleCounter=0;</span>
+<span class="fc" id="L11">	GameAssociation[] gameAssociationList = new GameAssociation[MAX_GAMES];</span>
+	
+	public Game[] getGameList() {
+<span class="nc" id="L14">		return gameList;</span>
+	}
+	public void setGameList(Game[] gameList) {
+<span class="nc" id="L17">		this.gameList = gameList;</span>
+<span class="nc" id="L18">	}</span>
+	/**
+	 * This method adds game into gamelist
+	 * @param name : sets name of the game
+	 * @param maxPlayers : sets max players involved in the game
+	 * @return 0 if game added successfully, otherwise error code
+	 */
+	public int addGame(String name,int maxPlayers){
+<span class="fc bfc" id="L26" title="All 2 branches covered.">		if(maxPlayers&lt;=0){</span>
+<span class="fc" id="L27">			return 100;</span>
+		}
+<span class="fc bfc" id="L29" title="All 2 branches covered.">		if(gameCounter &gt; (MAX_GAMES)){</span>
+<span class="fc" id="L30">			return 98;</span>
+		}
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		if(name==null){</span>
+<span class="fc" id="L33">			return 99;</span>
+		}
+<span class="fc" id="L35">		Game game = searchGame(name);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">		if(game != null){</span>
+<span class="fc" id="L37">			return 101;</span>
+		}
+<span class="fc" id="L39">		game = new Game(name, maxPlayers);		//fault removed, maxPlayers+1 changed</span>
+<span class="fc" id="L40">		gameList[gameCounter] = game;</span>
+<span class="fc" id="L41">		GameAssociation association = new GameAssociation();</span>
+<span class="fc" id="L42">		association.gamename = name;</span>
+<span class="fc" id="L43">		association.daynames = new String[MAX_DAYS];</span>
+<span class="fc" id="L44">		association.playerNames = new String[MAX_PLAYERS];</span>
+<span class="fc" id="L45">		gameAssociationList[gameCounter] = association; 		//fault corrected increment removed</span>
+<span class="fc" id="L46">		gameCounter++;</span>
+		
+<span class="fc" id="L48">		return 0;</span>
+	}
+	
+	/**
+	 * This method is used to search game by name
+	 * @param name : used to search game by name
+	 * @return game object if found else null
+	 */
+	public Game searchGame(String name) {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		for(int i=0; i &lt; gameCounter; i++){</span>
+<span class="fc" id="L58">			Game storedGame = gameList[i]; 	//i+1 changed to i</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			if(storedGame.name.equals(name)){</span>
+<span class="fc" id="L60">				return storedGame;</span>
+			}
+		}
+<span class="fc" id="L63">		return null;</span>
+	}
+	
+	/**
+	 * This method adds player to playerlist
+	 * @param name : sets name of the player
+	 * @param gameNames : name of games player is playing
+	 * @return string indicating successful addition otherwise error
+	 */
+	public String addPlayer(String name,String[] gameNames){
+<span class="fc" id="L73">		Player player = searchPlayer(name);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if(player != null){</span>
+<span class="fc" id="L75">			return name+&quot; already exists&quot;;</span>
+		}
+		//verify every gameName for its validity
+<span class="fc" id="L78">		Game[] gamesPlayed = new Game[gameNames.length];</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		for(int i=0; i &lt; gameNames.length; i++){	//changed from i=1 to i=0</span>
+<span class="fc" id="L80">			String gameName = gameNames[i];</span>
+<span class="fc" id="L81">			Game storedGame = searchGame(gameName);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			if(storedGame==null){</span>
+<span class="fc" id="L83">				return &quot;Error you cannot be registered for &quot;+gameName;</span>
+			}
+<span class="fc" id="L85">			gamesPlayed[i] = storedGame;</span>
+<span class="fc" id="L86">			GameAssociation association = searchAssociation(storedGame.name);</span>
+<span class="fc" id="L87">			association.playerNames[association.noofPlayers++]=name;</span>
+		}
+<span class="fc" id="L89">		player = new Player(name,gamesPlayed);</span>
+<span class="fc" id="L90">		playerList[playerCounter] = player;		</span>
+<span class="fc" id="L91">		playerCounter++;</span>
+<span class="fc" id="L92">		return name+&quot; added successfully&quot;;</span>
+	}
+	
+	/**
+	 * This method add days schedule
+	 * @param dayName : day name which wants to be scheduled
+	 * @param gameNames : name of games to be played on day
+	 * @return string indicating successful addition otherwise error
+	 */
+	public String addSchedule(String dayName,String[] gameNames){
+<span class="fc" id="L102">		DaySchedule day = searchDay(dayName);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if(day != null){</span>
+<span class="fc" id="L104">			return dayName+&quot; already scheduled&quot;;</span>
+		}
+		//verify every gameName for its validity
+<span class="fc" id="L107">		Game[] gamesPlayed = new Game[gameNames.length];</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		for(int i=0; i &lt; gameNames.length; i++){			//length-1 changed to length</span>
+<span class="fc" id="L109">			String gameName = gameNames[i];</span>
+<span class="fc" id="L110">			Game storedGame = searchGame(gameName);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			if(storedGame==null){</span>
+<span class="fc" id="L112">				return &quot;Error you cannot be registered for &quot;+gameName;</span>
+			}
+<span class="fc" id="L114">			gamesPlayed[i] = storedGame;</span>
+<span class="fc" id="L115">			GameAssociation association = searchAssociation(storedGame.name);</span>
+<span class="fc" id="L116">			association.daynames[association.noofDays++]=dayName;</span>
+		}
+<span class="fc" id="L118">		day = new DaySchedule(dayName,gamesPlayed);</span>
+<span class="fc" id="L119">		scheduleList[scheduleCounter] = day;</span>
+<span class="fc" id="L120">		scheduleCounter++;</span>
+<span class="fc" id="L121">		return dayName+&quot; added successfully&quot;;</span>
+	} 
+	
+	/**
+	 * This method finds Game details by game name
+	 * @param name : name of the game
+	 * @return game details in GameAssociation list if found, else null
+	 */
+	private GameAssociation searchAssociation(String name) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		for(GameAssociation association :gameAssociationList ){</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">			if(association.gamename.equals(name))</span>
+<span class="fc" id="L132">				return association;</span>
+		}
+<span class="nc" id="L134">		return null;</span>
+	}
+	
+	/**
+	 * This method finds player by player name
+	 * @param name : name of the player 
+	 * @return player details in Player object if found, else null
+	 */
+	public Player searchPlayer(String name) {
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		for(int i=0; i &lt; playerCounter; i++){	//changed from playercounter-1 to playerCounter</span>
+<span class="fc" id="L144">			Player storedPlayer = playerList[i];</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">			if(storedPlayer.name.equals(name)){		//changed to just name from storedPlayer.name</span>
+<span class="fc" id="L146">				return storedPlayer;</span>
+			}
+		}
+<span class="fc" id="L149">		return null;</span>
+	}
+	
+	/**
+	 * This method finds day schedule by day name
+	 * @param name: name of the day
+	 * @return details of days schedule if found, else null
+	 */
+	public DaySchedule searchDay(String name) {
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		for(int i=0; i &lt; scheduleCounter; i++){		//i=1 changed to i=0</span>
+<span class="fc" id="L159">			DaySchedule storedDay = scheduleList[i];		//i-1 changed to i</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">			if(storedDay.dayName.equals(name)){</span>
+<span class="fc" id="L161">				return storedDay;</span>
+			}
+		}
+<span class="fc" id="L164">		return null;</span>
+	}
+	
+	
+	
+	/**
+	 * This method displays game wise schedule by game name
+	 * @param gameName : name of the game
+	 * @return String with schedule
+	 */
+	public String displayGameWiseSchedule(String gameName){
+<span class="fc" id="L175">		Game game = searchGame(gameName);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if(game==null){</span>
+<span class="fc" id="L177">			return &quot;Error : This game is not valid&quot;;</span>
+		}
+<span class="fc" id="L179">		String[] playerNames = getPlayerNames(gameName);</span>
+<span class="fc" id="L180">		String[] dayNames    = getDayNames(gameName);</span>
+<span class="fc" id="L181">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L182">		sb.append(&quot;Players Names: &quot;);</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		for(String playerName : playerNames){</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">			if(playerName==null)</span>
+<span class="fc" id="L185">				break;</span>
+<span class="fc" id="L186">			sb.append(playerName);</span>
+		}
+<span class="fc" id="L188">		sb.append(&quot;\nDay Names: &quot;);</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		for(String dayName : dayNames){</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">			if(dayName==null)</span>
+<span class="fc" id="L191">				break;</span>
+<span class="fc" id="L192">			sb.append(dayName);</span>
+		}
+<span class="fc" id="L194">		return sb.toString();</span>
+	}
+	
+	/**
+	 * This method displays day wise schedule by day name
+	 * @param dayName : name of the day
+	 * @return String with day wise schedule
+	 */
+	public String displayDayWiseSchedule(String dayName){
+<span class="fc" id="L203">		DaySchedule schedule = searchDay(dayName);</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">		if(schedule==null){</span>
+<span class="fc" id="L205">			return &quot;Error : This day is not valid&quot;;</span>
+		}
+<span class="fc" id="L207">		StringBuilder sb = new StringBuilder();</span>
+		
+<span class="fc" id="L209">		Game[] gamesPlayed = schedule.games;</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		for(Game g : gamesPlayed){</span>
+<span class="fc" id="L211">			sb.append(&quot;Game = &quot;+g.name);</span>
+<span class="fc" id="L212">			String[] playerNames = getPlayerNames(g.name);</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">			for(String name : playerNames){</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">				if(name==null)</span>
+<span class="fc" id="L215">					break;</span>
+<span class="fc" id="L216">				sb.append(&quot; &quot;+name+&quot;\n&quot;);</span>
+			} 
+		}
+<span class="fc" id="L219">		return sb.toString();</span>
+	}
+	
+	/**
+	 * This method returns names of all players associated with game
+	 * @param name : name of game
+	 * @return array of string with player names
+	 */
+	private String[] getPlayerNames(String name) {
+<span class="fc" id="L228">		GameAssociation association = searchAssociation(name);</span>
+<span class="fc" id="L229">		return association.playerNames;</span>
+	}
+	
+	/**
+	 * This method returns names of all players associated with game
+	 * @param name : name of the game
+	 * @return array of string with day names
+	 */
+	private String[] getDayNames(String name) {
+<span class="fc" id="L238">		GameAssociation association = searchAssociation(name);</span>
+<span class="fc" id="L239">		return association.daynames; </span>
+	}
+
+	/**
+	 * This method is used to display schedule for a player
+	 * @param playerName : name of player
+	 * @return : string with game and days game is played 
+	 */
+	public String displayPlayerWiseSchedule(String playerName){
+<span class="fc" id="L248">		Player player = searchPlayer(playerName);</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">		if(player==null){</span>
+<span class="fc" id="L250">			return &quot;Error : This player is not valid&quot;;</span>
+		}
+<span class="fc" id="L252">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L253">		Game[] gamesPlayed = player.games;</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">		for(Game g : gamesPlayed){</span>
+<span class="fc" id="L255">			sb.append(&quot;Game : &quot;+g.name);</span>
+<span class="fc" id="L256">			String[] dayNames = getDayNames(g.name);</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">			for(String name : dayNames){</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">				if(name==null)</span>
+<span class="fc" id="L259">					break;</span>
+<span class="fc" id="L260">				sb.append(&quot; &quot;+name+&quot;\n&quot;);</span>
+			}
+		}
+<span class="fc" id="L263">		return sb.toString();</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>(default package) (14 Nov, 2017 11:41:58 PM)</div></body></html>
